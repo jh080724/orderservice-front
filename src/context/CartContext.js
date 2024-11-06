@@ -41,6 +41,8 @@ const cartReducer = (state, action) => {
       return {
         productsInCart: [],
         totalQuantity: 0,
+        // addCart,
+        // clearCart,
       };
   }
 };
@@ -68,12 +70,17 @@ export const CartContextProvider = (props) => {
     });
   };
 
+  const clearCart = () => {
+    dispatch({ type: 'CLEAR_CART' });
+  };
+
   return (
     <CartContext.Provider
       value={{
         productsInCart: cartState.productsInCart,
         totalQuantity: cartState.totalQuantity,
         addCart,
+        clearCart,
       }}
     >
       {props.children}

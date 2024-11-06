@@ -9,6 +9,8 @@ import LoginPage from './components/LoginPage';
 import { AuthContextProvider } from './context/UserContext';
 import ProductList from './components/ProductList';
 import { CartContextProvider } from './context/CartContext';
+import OrderPage from './components/OrderPage';
+import MyPage from './components/MyPage';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
               <Route path='/member/create' element={<MemberCreate />} />
               <Route path='/login' element={<LoginPage />} />
               <Route path='/product/list' element={<ProductList />} />
+              <Route path='/order/cart' element={<OrderPage />} />
+              <Route path='/mypage' element={<MyPage />} />
             </Routes>
           </div>
           <Footer />
