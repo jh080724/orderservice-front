@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
+import axiosInstance from '../configs/axios-config';
 
 const MyPage = () => {
   const [memberInfoList, setMemberInfoList] = useState([]);
@@ -23,6 +24,10 @@ const MyPage = () => {
       위 5가지 정보를 객체로 포장해서 memberInfoList에 넣어주세요.
       */
       try {
+        const res = await axiosInstance.get(
+          `${process.env.REACT_APP_API_BASE_URL}/user/myinfo`,
+        );
+        /*
         const res = await axios.get(
           `${process.env.REACT_APP_API_BASE_URL}/user/myinfo`,
           {
@@ -31,6 +36,10 @@ const MyPage = () => {
             },
           },
         );
+        */
+
+        console.log(res.data);
+
         setMemberInfoList([
           { key: '이름', value: res.data.result.name },
           { key: '이메일', value: res.data.result.email },
