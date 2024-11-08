@@ -21,6 +21,8 @@ const Header = () => {
     navigate('/');
   };
 
+  console.log('현재 이 사람 로그인 했니 ? ', isLoggedIn);
+
   return (
     <AppBar position='static'>
       <Toolbar>

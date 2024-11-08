@@ -64,6 +64,12 @@ const ProductList = ({ pageTitle }) => {
       page: currentPage,
     };
 
+    // 사용자가 조건을 선택했고, 검색어를 입력했다면 프로퍼티를 추가하자.
+    if (searchType !== 'optional' && searchValue) {
+      params.category = searchType;
+      params.searchName = searchValue;
+    }
+
     // 백앤드와 연동을 시작한다.
     setIsLoading(true);
 
@@ -152,6 +158,16 @@ const ProductList = ({ pageTitle }) => {
     }));
   };
 
+  // 검색버튼 클릭 이벤트 핸들러(form submit);
+  const searchBtnHandler = (e) => {
+    e.preventDefault();
+    setProductList([]);
+    setCurrentPage(0);
+    setIsLoading(false);
+    setLastPage(false);
+    loadProduct();
+  };
+
   return (
     <Container>
       <Grid
@@ -161,12 +177,7 @@ const ProductList = ({ pageTitle }) => {
         className='mt-5'
       >
         <Grid item>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              loadProduct();
-            }}
-          >
+          <form onSubmit={searchBtnHandler}>
             <Grid container spacing={2}>
               <Grid item>
                 <Select

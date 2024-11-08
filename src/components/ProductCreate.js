@@ -7,9 +7,11 @@ import {
   Grid,
   TextField,
 } from '@mui/material';
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../configs/axios-config';
+import { handleAxiosError } from '../configs/HandleAxiosError';
+import AuthContext from '../context/UserContext';
 
 const ProductCreate = () => {
   const [name, setName] = useState('');
@@ -18,6 +20,7 @@ const ProductCreate = () => {
   const [stockQuantity, setStockQuantity] = useState('');
   const [imageThumbnail, setImageThumbnail] = useState(null);
   const [productImage, setProductImage] = useState(null);
+  const { onLogout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   // useRef를 사용하여 특정 태그를 참조하기
@@ -47,7 +50,9 @@ const ProductCreate = () => {
 
       alert('상품 등록 완료!');
       navigate('/product/list');
-    } catch (e) {}
+    } catch (e) {
+      handleAxiosError(e, onLogout, navigate);
+    }
   };
 
   const fileUpdate = (e) => {

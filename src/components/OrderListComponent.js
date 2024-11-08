@@ -16,6 +16,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import axiosInstance from '../configs/axios-config';
 import AuthContext from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import { handleAxiosError } from '../configs/HandleAxiosError';
 
 const OrderListComponent = ({ isAdmin }) => {
   const [orderList, setOrderList] = useState([]);
@@ -39,14 +40,7 @@ const OrderListComponent = ({ isAdmin }) => {
         // return [...filtered, cancelOrder];
       });
     } catch (e) {
-      if (e.response.data?.statusMessage === 'EXPIRED_RT') {
-        alert('시간이 경과하여 재 로그인이 필요합니다.');
-        onLogout();
-        navigate('/');
-      } else if (e.response.data.message === 'NO_LOGIN') {
-        alert('아예 로그인을 하지 않아서 재발급 요청 들어갈 수 없음!');
-        navigate('/');
-      }
+      handleAxiosError(e, onLogout, navigate);
     }
   };
 
