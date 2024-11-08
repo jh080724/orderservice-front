@@ -1,3 +1,4 @@
+import { type } from '@testing-library/user-event/dist/type';
 import React, { useReducer } from 'react';
 
 // 리듀서 함수 정의
@@ -13,7 +14,7 @@ const cartReducer = (state, action) => {
 
       if (existProduct) {
         // 상품이 이미 카트에 존재한다면
-        // 다른 상품은 그대로 유지, id가 같은 강ㅊ품의 quantity만 수정
+        // 다른 상품은 그대로 유지, id가 같은 상품의 quantity만 수정
         updatedProduct = state.productsInCart.map((p) =>
           p.id === action.product.id
             ? { ...p, quantity: p.quantity + action.product.quantity }
@@ -25,8 +26,8 @@ const cartReducer = (state, action) => {
       }
 
       // 세션 스토리지에 상태 저장
-      // 로컬, 세션 스토리지에ㅔ는 문자열만 저장할 수 있음.(객체, 배열은 저장안됨.)
-      // JSON 문자열로 변환해서 객체, 배열 저장
+      // 로컬, 세션 스토리지에는 문자열만 저장할 수 있습니다. (객체, 배열은 저장 안됨)
+      // JSON 문자열로 변환해서 객체, 배열을 저장
       sessionStorage.setItem('productsInCart', JSON.stringify(updatedProduct));
       sessionStorage.setItem('totalQuantity', totalQuantity);
 
@@ -41,8 +42,6 @@ const cartReducer = (state, action) => {
       return {
         productsInCart: [],
         totalQuantity: 0,
-        // addCart,
-        // clearCart,
       };
   }
 };
@@ -57,8 +56,8 @@ const CartContext = React.createContext({
 
 export const CartContextProvider = (props) => {
   const [cartState, dispatch] = useReducer(cartReducer, {
-    // JSON 문자열로 저장한 객체, 배열을 JS 타입으로 변환하는 JSON.oparse()
-    // 연산이 필요한 정보는 그 타입에 맞게 변환해야 함.
+    // JSON 문자열로 저정한 객체, 배열을 JS 타입으로 변환하는 JSON.parse()
+    // 연산이 필요한 정보는 그 타입에 맞게 변환해야 합니다.
     productsInCart: JSON.parse(sessionStorage.getItem('productsInCart')) || [],
     totalQuantity: parseInt(sessionStorage.getItem('totalQuantity')) || 0,
   });
@@ -73,6 +72,8 @@ export const CartContextProvider = (props) => {
   const clearCart = () => {
     dispatch({ type: 'CLEAR_CART' });
   };
+
+  console.log(cartState);
 
   return (
     <CartContext.Provider

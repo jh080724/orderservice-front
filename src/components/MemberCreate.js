@@ -39,18 +39,19 @@ const MemberCreate = () => {
       {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-type': 'application/json',
         },
         body: JSON.stringify(registerData),
       },
     );
 
     if (res.status === 201) {
-      alert('회원가입 성공! 환영합니다.');
+      alert('회원 가입 성공! 환영합니다!');
       navigate('/');
     } else {
       const data = await res.json();
       console.log(data);
+
       alert(data.statusMessage);
     }
   };

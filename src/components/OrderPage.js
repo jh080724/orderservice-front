@@ -14,9 +14,15 @@ import {
 import React, { useContext } from 'react';
 import CartContext from '../context/CartContext';
 import axios from 'axios';
+import axiosInstance from '../configs/axios-config';
+import AuthContext from '../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 const OrderPage = () => {
   const { productsInCart, clearCart } = useContext(CartContext);
+  const { onLogout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const removeCartItem = () => {
     if (confirm('장바구니를 비웁니다.')) {
       clearCart();
@@ -24,19 +30,21 @@ const OrderPage = () => {
   };
 
   const orderCreate = async () => {
-    // 백앤드가 달라는 형태로 줘야하니까 그에 맞게 객체를 매핑
+    console.log('주문 요청 핸들러 호출!');
+
+    // 백엔드가 달라는 형태로 줘야하니까 그에 맞게 객체를 매핑
     const orderProducts = productsInCart.map((p) => ({
       productId: p.id,
       productCount: p.quantity,
     }));
 
     if (orderProducts.length < 1) {
-      alert('주문 대상 물품이 없습니다.');
+      alert('주문 대상 물품이 없습니다!');
       return;
     }
 
     const yesOrNo = confirm(
-      `${orderProducts.length}개의 상품을 주문하시겠습니까 ?`,
+      `${orderProducts.length}개의 상품을 주문하시겠습니까?`,
     );
 
     if (!yesOrNo) {
@@ -44,9 +52,9 @@ const OrderPage = () => {
       return;
     }
 
-    // 백앤드로 주문 요청;
+    // 백엔드로 주문 요청
     /*
-    fetch('요청url', {
+    const res = await fetch('요청url', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -56,23 +64,25 @@ const OrderPage = () => {
     });
     */
 
-    // axios는 200번대 정상응답이 아닌 모든 것을 예외로 처리하기 때문에
-    // try, catch로 작성합니다.(fetch는 400번대 응답에도 예외가 발생하진 않음.)
+    // axios는 200번대 정상 응답이 아닌 모든 것을 예외로 처리하기 때문에
+    // try, catch로 작성합니다. (fetch는 400번대 응답에도 예외가 발생하진 않음)
     try {
-      await axios.post(
+      await axiosInstance.post(
         `${process.env.REACT_APP_API_BASE_URL}/order/create`,
         orderProducts,
-        {
-          headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('ACCESS_TOKEN'),
-          },
-        },
       );
       alert('주문이 완료되었습니다.');
       clearCart();
     } catch (e) {
       console.log(e);
-      alert('주문실패!');
+      if (e.response.data?.statusMessage === 'EXPIRED_RT') {
+        alert('시간이 경과하여 재 로그인이 필요합니다.');
+        onLogout();
+        navigate('/');
+      } else if (e.response.data.message === 'NO_LOGIN') {
+        alert('아예 로그인을 하지 않아서 재발급 요청 들어갈 수 없음!');
+        navigate('/');
+      }
     }
   };
 

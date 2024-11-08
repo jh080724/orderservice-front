@@ -1,9 +1,10 @@
 import {
   AppBar,
-  Container,
-  Toolbar,
-  Grid,
   Button,
+  Container,
+  Grid,
+  Grid2,
+  Toolbar,
   Typography,
 } from '@mui/material';
 import React, { useContext } from 'react';
@@ -12,7 +13,6 @@ import AuthContext from '../context/UserContext';
 
 const Header = () => {
   const { isLoggedIn, onLogout, userRole } = useContext(AuthContext);
-
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -70,11 +70,9 @@ const Header = () => {
                   </Button>
                 </>
               )}
-
               <Button color='inherit' component={Link} to='/product/list'>
                 상품목록
               </Button>
-
               {!isLoggedIn && (
                 <>
                   <Button color='inherit' component={Link} to='/member/create'>
@@ -85,7 +83,6 @@ const Header = () => {
                   </Button>
                 </>
               )}
-
               {isLoggedIn && (
                 <Button color='inherit' onClick={handleLogout}>
                   로그아웃
