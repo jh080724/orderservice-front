@@ -12,6 +12,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../context/UserContext';
 import { EventSourcePolyfill } from 'event-source-polyfill';
 import { NotificationAdd } from '@mui/icons-material';
+import { API_BASE_URL, ORDER } from '../configs/host-config';
 
 const Header = () => {
   const { isLoggedIn, onLogout, userRole } = useContext(AuthContext);
@@ -33,7 +34,7 @@ const Header = () => {
     if (userRole === 'ADMIN') {
       // 알림을 받기 위해 서버와 연결을 하기 위한 요청.(/subscribe)
       const sse = new EventSourcePolyfill(
-        `${process.env.REACT_APP_API_BASE_URL}/subscribe`,
+        `${API_BASE_URL}/${ORDER}/subscribe`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -58,7 +59,7 @@ const Header = () => {
         console.log(orderData);
 
         setLiveQuantity((prev) => prev + 1);
-        setMessage(orderData.userEmail + '님의 주문!');
+        setMessage(orderData.name + '님의 주문!');
       });
 
       sse.onerror = (error) => {
