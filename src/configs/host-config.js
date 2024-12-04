@@ -15,7 +15,7 @@ console.log('클라이언트 호스트 네임', clientHostName);
 if (clientHostName === 'localhost') {
   // 개발 중
   backendHostName = 'http://localhost:8181';
-} else if (clientHostName === 'http://separan.shop') {
+} else if (clientHostName === 'separan.shop') {
   // 배포해서 현재 서비스 중
   backendHostName = 'http://13.124.67.244:8000';
 }
