@@ -3,6 +3,8 @@ const clientHostName = window.location.hostname;
 
 let backendHostName; // 백앤드 서버 호스트 이름
 
+console.log('클라이언트 호스트 네임', clientHostName);
+
 /*
 리액트 프로젝트의 개발 중 ip는 localhost 입니다. -> 백앤드도 localhost로 작업 중일 것이다;
 하지만, 나중에는 서비스를 위해 도메일을 구압할 것입니다. -> 백앤드의 주소도 달라질 수 잇다.
