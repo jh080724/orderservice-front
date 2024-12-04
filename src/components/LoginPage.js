@@ -29,10 +29,7 @@ const LoginPage = () => {
     };
 
     try {
-      const res = await axios.post(
-        `${API_BASE_URL}/${USER}/doLogin`,
-        loginData,
-      );
+      const res = await axios.post(`${API_BASE_URL}${USER}/doLogin`, loginData);
       console.log('axios로 로그인 요청 결과: ', res);
 
       alert('로그인 성공!');

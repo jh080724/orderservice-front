@@ -26,7 +26,7 @@ const OrderListComponent = ({ isAdmin }) => {
 
   const cancelOrder = async (id) => {
     try {
-      await axiosInstance.patch(`${API_BASE_URL}/${ORDER}/order/${id}/cancel`);
+      await axiosInstance.patch(`${API_BASE_URL}${ORDER}/order/${id}/cancel`);
 
       // 주문 취소를 백엔드로 요청하고, 문제가 없었다면 주문 목록을 다시 렌더링
       setOrderList((prevList) => {

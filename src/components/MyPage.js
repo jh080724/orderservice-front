@@ -33,8 +33,8 @@ const MyPage = () => {
       try {
         const url =
           userRole === 'ADMIN'
-            ? `${API_BASE_URL}/${USER}/list`
-            : `${API_BASE_URL}/${USER}/myinfo`;
+            ? `${API_BASE_URL}${USER}/list`
+            : `${API_BASE_URL}${USER}/myinfo`;
 
         const res = await axiosInstance.get(url);
         /*

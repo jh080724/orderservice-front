@@ -33,14 +33,11 @@ const Header = () => {
 
     if (userRole === 'ADMIN') {
       // 알림을 받기 위해 서버와 연결을 하기 위한 요청.(/subscribe)
-      const sse = new EventSourcePolyfill(
-        `${API_BASE_URL}/${ORDER}/subscribe`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      const sse = new EventSourcePolyfill(`${API_BASE_URL}${ORDER}/subscribe`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
 
       sse.addEventListener('connect', (event) => {
         console.log('connect!!!, 연결되었음........................');

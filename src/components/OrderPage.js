@@ -69,7 +69,7 @@ const OrderPage = () => {
     // try, catch로 작성합니다. (fetch는 400번대 응답에도 예외가 발생하진 않음)
     try {
       await axiosInstance.post(
-        `${API_BASE_URL}/${ORDER}/order/create`,
+        `${API_BASE_URL}${ORDER}/order/create`,
         orderProducts,
       );
       alert('주문이 완료되었습니다.');
