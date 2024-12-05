@@ -17,7 +17,8 @@ if (clientHostName === 'localhost') {
   backendHostName = 'http://localhost:8181';
 } else if (clientHostName === 'separan.shop') {
   // 배포해서 현재 서비스 중
-  backendHostName = 'http://13.124.67.244:8000';
+  // backendHostName = 'http://13.124.67.244:8000';
+  backendHostName = 'https://api.separan.shop';
 }
 
 export const API_BASE_URL = backendHostName;
